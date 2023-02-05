@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -59,4 +61,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         return authenticationProvider;
     }
+
+    @Bean
+    public AuthenticationManager authenticationManager(DaoAuthenticationProvider provider) {
+        return new ProviderManager(provider);
+    }
+
 }
