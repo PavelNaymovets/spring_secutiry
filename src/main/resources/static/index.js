@@ -14,7 +14,7 @@ angular.module('app', ['ngStorage']).controller('indexController', function($sco
             .then(function successCallback(response) {
                 if (response.data.token) {
                     $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
-                    $localStorage.springWebUser = {username: $scope.user.username, token: response.data.token};
+                    $localStorage.springWebUser = {username: $scope.user.username, token: response.data.token, isAdmin: response.data.isAdmin};
 
                     $scope.user.username = null;
                     $scope.user.password = null;
@@ -37,6 +37,15 @@ angular.module('app', ['ngStorage']).controller('indexController', function($sco
     //проверка авторизации
     $rootScope.isUserLoggedIn = function () {
         if ($localStorage.springWebUser) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //пользователь имеет права администратора
+    $rootScope.isAdmin = function () {
+        if ($localStorage.springWebUser.isAdmin == true) {
             return true;
         } else {
             return false;
@@ -74,6 +83,15 @@ angular.module('app', ['ngStorage']).controller('indexController', function($sco
         }).then(function (response) {
               console.log(response);
               $scope.ProductsList = response.data.content;
+        });
+    }
+
+    //запрос списка пользователей
+    $scope.loadUsers = function () {
+        $http.get(contextPath + '/api/v1/admin')
+             .then(function (response) {
+                  console.log(response);
+                  $scope.UserList = response.data;
         });
     }
 
@@ -138,6 +156,7 @@ angular.module('app', ['ngStorage']).controller('indexController', function($sco
              });
     }
 
+    $scope.loadUsers();
     $scope.loadProducts();
     $scope.loadProductsCart();
 });
