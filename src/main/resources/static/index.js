@@ -1,5 +1,74 @@
-angular.module('app', []).controller('indexController', function($scope, $http){
+angular.module('app', ['ngStorage']).controller('indexController', function($scope, $rootScope, $http, $localStorage){
     const contextPath = 'http://localhost:8190/app';
+
+    //подставляю авторизационный токен из локал стораджа в хедер при каждом запросе
+    if ($localStorage.springWebUser) {
+        $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.springWebUser.token;
+    }
+
+    //АУТЕНТИФИКАЦИЯ
+
+    //аутентификация
+    $scope.tryToAuth = function () {
+        $http.post(contextPath + '/auth', $scope.user)
+            .then(function successCallback(response) {
+                if (response.data.token) {
+                    $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
+                    $localStorage.springWebUser = {username: $scope.user.username, token: response.data.token, isAdmin: response.data.isAdmin};
+
+                    $scope.user.username = null;
+                    $scope.user.password = null;
+                }
+            }, function errorCallback(response) {
+            });
+    }
+
+    //выход с сайта
+    $scope.tryToLogout = function () {
+        $scope.clearUser();
+        if ($scope.user.username) {
+            $scope.user.username = null;
+        }
+        if ($scope.user.password) {
+            $scope.user.password = null;
+        }
+    }
+
+    //проверка авторизации
+    $rootScope.isUserLoggedIn = function () {
+        if ($localStorage.springWebUser) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //пользователь имеет права администратора
+    $rootScope.isAdmin = function () {
+        if ($localStorage.springWebUser.isAdmin == true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //уведомление об авторизации
+    $scope.showCurrentUserInfo = function () {
+        $http.get(contextPath + '/api/v1/profile')
+            .then(function successCallback(response) {
+                alert('Имя пользователя: ' + response.data.username);
+            }, function errorCallback(response) {
+                alert('Не авторизованный пользователь');
+            });
+    }
+
+    //удаление токена из локал стораджа
+    $scope.clearUser = function () {
+        delete $localStorage.springWebUser;
+        $http.defaults.headers.common.Authorization = '';
+    }
+
+    //РАБОТА С ТОВАРАМИ
 
     //запрос списка продуктов из репозитория
     $scope.loadProducts = function (pageIndex = 1) {
@@ -14,6 +83,15 @@ angular.module('app', []).controller('indexController', function($scope, $http){
         }).then(function (response) {
               console.log(response);
               $scope.ProductsList = response.data.content;
+        });
+    }
+
+    //запрос списка пользователей
+    $scope.loadUsers = function () {
+        $http.get(contextPath + '/api/v1/admin')
+             .then(function (response) {
+                  console.log(response);
+                  $scope.UserList = response.data;
         });
     }
 
@@ -78,6 +156,7 @@ angular.module('app', []).controller('indexController', function($scope, $http){
              });
     }
 
+    $scope.loadUsers();
     $scope.loadProducts();
     $scope.loadProductsCart();
 });
