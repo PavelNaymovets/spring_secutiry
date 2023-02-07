@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/admin")
 @AllArgsConstructor
 public class AdminController {
-    private final UserService userService;
+    private UserService userService;
 
     @GetMapping
     public List<UserDto> getAll() {

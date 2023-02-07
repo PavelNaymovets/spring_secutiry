@@ -97,10 +97,10 @@ angular.module('app', ['ngStorage']).controller('indexController', function($sco
 
     //запрос списка продуктов из корзины
     $scope.loadProductsCart = function () {
-        $http.get(contextPath + '/api/v1/products/cart')
+        $http.get(contextPath + '/api/v1/cart')
              .then(function (response) {
                   console.log(response);
-                  $scope.ProductsListCart = response.data;
+                  $scope.Cart = response.data;
         });
     }
 
@@ -120,7 +120,7 @@ angular.module('app', ['ngStorage']).controller('indexController', function($sco
 
     //удаление продукта из корзины по id
     $scope.deleteProductCart = function (productId) {
-        $http.delete(contextPath + '/api/v1/products/cart/' + productId)
+        $http.delete(contextPath + '/api/v1/cart/' + productId)
              .then(function (response) {
                 $scope.loadProductsCart();
              });
@@ -128,11 +128,25 @@ angular.module('app', ['ngStorage']).controller('indexController', function($sco
 
     //добавление продукта в корзину по id
     $scope.addProductCart = function (productId) {
-        $http.post(contextPath + '/api/v1/products/cart/' + productId)
+        $http.post(contextPath + '/api/v1/cart/' + productId)
              .then(function (response) {
                 $scope.loadProductsCart();
              });
     }
+
+    //изменение количества продуктов в корзине по id
+        $scope.changeProductQuantityInCart = function (productId, delta) {
+            $http({
+                url: contextPath + '/api/v1/cart',
+                method: 'PUT',
+                params: {
+                    id: productId,
+                    delta: delta
+                }
+            }).then(function (response) {
+                $scope.loadProductsCart();
+            });
+        }
 
     //изменение количества продуктов по id
     $scope.changeQuantity = function (productId, delta) {

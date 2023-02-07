@@ -19,9 +19,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/products")
 @AllArgsConstructor
 public class ProductController {
-    private final UserService userService;
-    ProductService productService;
-    Cart cart;
+    private ProductService productService;
 
     @GetMapping
     public Page<ProductDto> getAll(
@@ -35,11 +33,6 @@ public class ProductController {
             page = 1;
         }
         return productService.findAll(minPrice, maxPrice, namePart, page).map(ProductConverter::entityToDto);
-    }
-
-    @GetMapping("/cart")
-    public List<ProductDto> getAllProductCart() {
-        return cart.getProducts().stream().map(ProductConverter::entityToDto).collect(Collectors.toList());
     }
 
     @PostMapping
@@ -59,20 +52,9 @@ public class ProductController {
         productService.deleteById(id);
     }
 
-    @DeleteMapping("/cart/{id}")
-    public void deleteByIdCart(@PathVariable Long id){
-        Product product = productService.findById(id).get();
-        cart.deleteById(product);
-    }
-
     @PutMapping
     public void changeCost(@RequestParam Long id, @RequestParam Integer delta) {
         productService.changeCost(id, delta);
     }
 
-    @PostMapping("/cart/{id}")
-    public void addProductInCart(@PathVariable Long id) {
-        Product product = productService.findById(id).get();
-        cart.addProduct(product);
-    }
 }
