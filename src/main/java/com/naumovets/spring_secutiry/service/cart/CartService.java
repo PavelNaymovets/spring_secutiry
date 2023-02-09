@@ -1,5 +1,6 @@
 package com.naumovets.spring_secutiry.service.cart;
 
+import com.naumovets.spring_secutiry.aop.aspects.annotations.Timer;
 import com.naumovets.spring_secutiry.cart.Cart;
 import com.naumovets.spring_secutiry.entities.products.Product;
 import com.naumovets.spring_secutiry.exceptions.ResourceNotFoundException;
@@ -11,6 +12,7 @@ import javax.annotation.PostConstruct;
 
 @Service
 @RequiredArgsConstructor
+@Timer
 public class CartService {
     private final ProductService productService;
     private Cart cart;
