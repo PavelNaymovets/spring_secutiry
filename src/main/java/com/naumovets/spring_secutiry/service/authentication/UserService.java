@@ -1,5 +1,6 @@
 package com.naumovets.spring_secutiry.service.authentication;
 
+import com.naumovets.spring_secutiry.aop.aspects.annotations.Timer;
 import com.naumovets.spring_secutiry.entities.authentication.Role;
 import com.naumovets.spring_secutiry.entities.authentication.User;
 import com.naumovets.spring_secutiry.repositories.authentication.UserRepository;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Timer //самописная аннотация для измерения времени работы метода. Работает, если ее поставить и перед классом и перед методом
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
 
