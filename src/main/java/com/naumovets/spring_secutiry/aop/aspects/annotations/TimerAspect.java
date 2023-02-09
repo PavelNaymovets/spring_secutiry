@@ -8,6 +8,8 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+//Аспект описывает сквозную логику измерения работы методов класса. В Pointcut попадают методы с аннотацией @Timer, или методы находящие в классе с аннотацией @Timer
+
 @Aspect
 @Slf4j
 @Component
