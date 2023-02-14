@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class ProductController {
     private ProductService productService;
+    private ProductConverter productConverter;
 
     @GetMapping
     public Page<ProductDto> getAll(
@@ -37,7 +38,7 @@ public class ProductController {
 
     @PostMapping
     public ProductDto addNewProduct(@RequestBody ProductDto productDto) {
-        Product newProduct = ProductConverter.dtoToEntity(productDto);
+        Product newProduct = productConverter.dtoToEntity(productDto);
         newProduct = productService.addNewProduct(newProduct);
         return ProductConverter.entityToDto(newProduct);
     }

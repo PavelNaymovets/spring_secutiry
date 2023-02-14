@@ -50,6 +50,10 @@ public class ProductService {
         product.setCost(product.getCost() + delta);
     }
 
+    public List<Product> findAll() {
+        return productRepository.findAll();
+    }
+
     public List<Product> findByCostBetween(Integer min, Integer max) {
         return productRepository.findAllByCostBetween(min, max);
     }

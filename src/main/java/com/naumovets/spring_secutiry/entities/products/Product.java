@@ -24,6 +24,10 @@ public class Product {
     @Column(name = "cost")
     private int cost;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
     @Override
     public String toString() {
         return id + " " + title + " " + cost;
