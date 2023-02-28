@@ -1,5 +1,6 @@
 angular.module('app', ['ngStorage']).controller('indexController', function($scope, $rootScope, $http, $localStorage){
     const contextPath = 'http://localhost:8190/market-core';
+    const contextPathToCartService = 'http://localhost:8191/market-carts';
 
     //подставляю авторизационный токен из локал стораджа в хедер при каждом запросе
     if ($localStorage.springWebUser) {
@@ -97,7 +98,7 @@ angular.module('app', ['ngStorage']).controller('indexController', function($sco
 
     //запрос списка продуктов из корзины
     $scope.loadProductsCart = function () {
-        $http.get(contextPath + '/api/v1/cart')
+        $http.get(contextPathToCartService + '/api/v1/cart')
              .then(function (response) {
                   console.log(response);
                   $scope.Cart = response.data;
@@ -120,7 +121,7 @@ angular.module('app', ['ngStorage']).controller('indexController', function($sco
 
     //удаление продукта из корзины по id
     $scope.deleteProductCart = function (productId) {
-        $http.delete(contextPath + '/api/v1/cart/' + productId)
+        $http.delete(contextPathToCartService + '/api/v1/cart/' + productId)
              .then(function (response) {
                 $scope.loadProductsCart();
              });
@@ -128,7 +129,7 @@ angular.module('app', ['ngStorage']).controller('indexController', function($sco
 
     //добавление продукта в корзину по id
     $scope.addProductCart = function (productId) {
-        $http.post(contextPath + '/api/v1/cart/' + productId)
+        $http.post(contextPathToCartService + '/api/v1/cart/' + productId)
              .then(function (response) {
                 $scope.loadProductsCart();
              });
@@ -137,7 +138,7 @@ angular.module('app', ['ngStorage']).controller('indexController', function($sco
     //изменение количества продуктов в корзине по id
         $scope.changeProductQuantityInCart = function (productId, delta) {
             $http({
-                url: contextPath + '/api/v1/cart',
+                url: contextPathToCartService + '/api/v1/cart',
                 method: 'PUT',
                 params: {
                     id: productId,

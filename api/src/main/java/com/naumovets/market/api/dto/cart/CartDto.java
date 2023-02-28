@@ -1,4 +1,4 @@
-package com.naumovets.market.core.dto;
+package com.naumovets.market.api.dto.cart;
 
 import lombok.Data;
 import java.util.List;

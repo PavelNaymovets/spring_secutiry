@@ -1,4 +1,4 @@
-package com.naumovets.market.core.dto;
+package com.naumovets.market.api.dto.product;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

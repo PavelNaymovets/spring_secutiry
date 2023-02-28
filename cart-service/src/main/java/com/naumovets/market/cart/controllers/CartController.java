@@ -1,22 +1,25 @@
-package com.naumovets.market.core.controller;
+package com.naumovets.market.cart.controllers;
 
-import com.naumovets.market.core.service.cart.CartService;
-import com.naumovets.market.core.cart.Cart;
-import lombok.AllArgsConstructor;
+import com.naumovets.market.api.dto.cart.CartDto;
+import com.naumovets.market.cart.converters.CartConverter;
+import com.naumovets.market.cart.services.CartService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/cart")
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
+@CrossOrigin("*")
 public class CartController {
 
-    private CartService cartService;
+    private final CartService cartService;
+    private final CartConverter cartConverter;
 
     @GetMapping
-    public Cart getAllProductCart() {
-        return cartService.getCart();
+    public CartDto getAllProductCart() {
+        return cartConverter.entityToDto(cartService.getCart());
     }
 
     @PostMapping("/{id}")

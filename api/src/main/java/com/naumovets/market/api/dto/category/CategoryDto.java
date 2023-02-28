@@ -1,5 +1,6 @@
-package com.naumovets.market.core.dto;
+package com.naumovets.market.api.dto.category;
 
+import com.naumovets.market.api.dto.product.ProductDto;
 import lombok.Data;
 import java.util.List;
 

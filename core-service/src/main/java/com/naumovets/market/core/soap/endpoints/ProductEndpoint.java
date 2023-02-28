@@ -1,8 +1,8 @@
 package com.naumovets.market.core.soap.endpoints;
 
 import com.naumovets.market.core.service.products.ProductService;
-import com.naumovets.market.core.soap.product.*;
 import com.naumovets.market.core.exceptions.ResourceNotFoundException;
+import com.naumovets.market.core.soap.product.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;

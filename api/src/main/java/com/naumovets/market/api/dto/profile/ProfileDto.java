@@ -1,15 +1,12 @@
-package com.naumovets.market.core.dto;
+package com.naumovets.market.api.dto.profile;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDto {
+public class ProfileDto {
     private String username;
-    private List<String> roles;
 }
