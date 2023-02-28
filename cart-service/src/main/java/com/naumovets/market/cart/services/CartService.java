@@ -38,4 +38,8 @@ public class CartService {
     public void changeQuantity(Long id, Integer delta) {
         cart.changeQuantity(id, delta);
     }
+
+    public void deleteProducts() {
+        cart.deleteAll();
+    }
 }

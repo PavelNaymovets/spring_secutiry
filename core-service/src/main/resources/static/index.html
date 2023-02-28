@@ -117,7 +117,10 @@
             </tr>
             </tbody>
         </table>
-        <br>
+        <p></p>
+        <button type="button" class="btn btn-secondary" ng-click="clearCart()">Очистить корзину</button>
+        <button type="button" class="btn btn-primary" ng-click="createOrder()">Оформить заказ</button>
+        <p></p>
         <h3>Добавить продукт</h3>
         <form novalidate ng-submit="addProduct()">
             <input class="form-control" type="text" placeholder="Название" ng-model="newProduct.title">

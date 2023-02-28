@@ -39,6 +39,11 @@ public class Cart {
         recalculate();
     }
 
+    public void deleteAll() {
+        list.clear();
+        recalculate();
+    }
+
     private void recalculate() {
         totalPrice = 0;
         list.forEach(cartItem -> totalPrice = totalPrice + cartItem.getPrice());

@@ -28,12 +28,17 @@ public class CartController {
     }
 
     @PutMapping
-    public void changeQuantity(@RequestParam Long id, @RequestParam Integer delta) {
+    public void changeQuantityProductInCart(@RequestParam Long id, @RequestParam Integer delta) {
         cartService.changeQuantity(id, delta);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteByIdCart(@PathVariable Long id) {
+    public void deleteProductByIdFromCart(@PathVariable Long id) {
         cartService.deleteProduct(id);
+    }
+
+    @DeleteMapping
+    public void deleteProductsFromCart() {
+        cartService.deleteProducts();
     }
 }
