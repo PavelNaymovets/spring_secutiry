@@ -1,0 +1,6 @@
+server:
+  port: 8191
+  servlet:
+    context-path: /market-cart
+    session:
+      timeout: 60s

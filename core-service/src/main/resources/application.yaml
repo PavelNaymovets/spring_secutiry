@@ -1,7 +1,7 @@
 server:
   port: 8190
   servlet:
-    context-path: /app
+    context-path: /market-core
     session:
       timeout: 60s
 spring:

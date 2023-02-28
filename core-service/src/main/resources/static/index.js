@@ -1,5 +1,5 @@
 angular.module('app', ['ngStorage']).controller('indexController', function($scope, $rootScope, $http, $localStorage){
-    const contextPath = 'http://localhost:8190/app';
+    const contextPath = 'http://localhost:8190/market-core';
 
     //подставляю авторизационный токен из локал стораджа в хедер при каждом запросе
     if ($localStorage.springWebUser) {
