@@ -1,8 +1,8 @@
 package com.naumovets.market.core.controller;
 
+import com.naumovets.market.api.dto.user.UserDto;
 import com.naumovets.market.core.converters.UserConverter;
 import com.naumovets.market.core.service.authentication.UserService;
-import com.naumovets.market.core.dto.UserDto;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

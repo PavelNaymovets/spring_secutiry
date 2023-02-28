@@ -1,10 +1,10 @@
 package com.naumovets.market.core.converters;
 
+import com.naumovets.market.api.dto.product.ProductDto;
+import com.naumovets.market.api.exceptions.ResourceNotFoundException;
 import com.naumovets.market.core.entities.products.Category;
 import com.naumovets.market.core.entities.products.Product;
 import com.naumovets.market.core.service.products.CategoryService;
-import com.naumovets.market.core.dto.ProductDto;
-import com.naumovets.market.core.exceptions.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

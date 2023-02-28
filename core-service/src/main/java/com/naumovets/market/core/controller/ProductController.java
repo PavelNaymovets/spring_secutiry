@@ -1,10 +1,10 @@
 package com.naumovets.market.core.controller;
 
+import com.naumovets.market.api.dto.product.ProductDto;
+import com.naumovets.market.api.exceptions.ResourceNotFoundException;
 import com.naumovets.market.core.converters.ProductConverter;
 import com.naumovets.market.core.entities.products.Product;
 import com.naumovets.market.core.service.products.ProductService;
-import com.naumovets.market.core.dto.ProductDto;
-import com.naumovets.market.core.exceptions.ResourceNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;

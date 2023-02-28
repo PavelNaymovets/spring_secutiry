@@ -1,7 +1,8 @@
 package com.naumovets.market.core.validators;
 
-import com.naumovets.market.core.exceptions.ValidationException;
-import com.naumovets.market.core.dto.ProductDto;
+
+import com.naumovets.market.api.dto.product.ProductDto;
+import com.naumovets.market.api.exceptions.ValidationException;
 
 import java.util.ArrayList;
 import java.util.List;

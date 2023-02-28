@@ -1,9 +1,9 @@
 package com.naumovets.market.core.controller;
 
-import com.naumovets.market.core.exceptions.AppError;
+import com.naumovets.market.api.dto.jwt.JwtRequest;
+import com.naumovets.market.api.dto.jwt.JwtResponse;
+import com.naumovets.market.api.exceptions.AppError;
 import com.naumovets.market.core.service.authentication.UserService;
-import com.naumovets.market.core.dto.JwtRequest;
-import com.naumovets.market.core.dto.JwtResponse;
 import com.naumovets.market.core.utils.JwtTokenUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

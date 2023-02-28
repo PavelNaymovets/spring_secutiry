@@ -1,8 +1,8 @@
 package com.naumovets.market.core.converters;
 
+import com.naumovets.market.api.dto.user.UserDto;
 import com.naumovets.market.core.entities.authentication.Role;
 import com.naumovets.market.core.entities.authentication.User;
-import com.naumovets.market.core.dto.UserDto;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

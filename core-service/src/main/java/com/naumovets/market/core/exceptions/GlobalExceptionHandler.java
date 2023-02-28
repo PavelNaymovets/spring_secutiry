@@ -1,5 +1,9 @@
 package com.naumovets.market.core.exceptions;
 
+import com.naumovets.market.api.exceptions.AppError;
+import com.naumovets.market.api.exceptions.FieldsValidationError;
+import com.naumovets.market.api.exceptions.ResourceNotFoundException;
+import com.naumovets.market.api.exceptions.ValidationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
