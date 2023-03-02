@@ -25,11 +25,6 @@ public class AppConfig {
     private final ProductServiceIntegrationProperties productServiceIntegrationProperties;
 
     @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
-
-    @Bean
     public WebClient productServiceWebClient() {
         TcpClient tcpClient = TcpClient
                 .create()

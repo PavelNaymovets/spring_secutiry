@@ -2,7 +2,6 @@ package com.naumovets.market.cart.services;
 
 
 import com.naumovets.market.api.dto.product.ProductDto;
-import com.naumovets.market.api.exceptions.ResourceNotFoundException;
 import com.naumovets.market.cart.integrations.ProductServiceIntegration;
 import com.naumovets.market.cart.models.Cart;
 import lombok.RequiredArgsConstructor;
@@ -26,12 +25,12 @@ public class CartService {
     }
 
     public void addProduct(Long productId) {
-        ProductDto product = productServiceIntegration.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Could not add product because did not find, id: " + productId));
+        ProductDto product = productServiceIntegration.findById(productId);
         cart.add(product);
     }
 
     public void deleteProduct(Long productId) {
-        ProductDto product = productServiceIntegration.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Could not delete product because did not find, id: " + productId));
+        ProductDto product = productServiceIntegration.findById(productId);
         cart.delete(product);
     }
 
