@@ -5,16 +5,14 @@ import com.naumovets.market.core.service.authentication.UserService;
 import com.naumovets.market.core.service.order.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/v1/orders")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class OrderController {
     private final UserService userService;
     private final OrderService orderService;

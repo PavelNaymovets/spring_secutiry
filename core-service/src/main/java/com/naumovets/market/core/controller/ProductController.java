@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/products")
 @AllArgsConstructor
+@CrossOrigin("*")
 public class ProductController {
     private ProductService productService;
     private ProductConverter productConverter;

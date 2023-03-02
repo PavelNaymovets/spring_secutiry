@@ -10,9 +10,9 @@
 		<module>api</module>
 		<module>cart-service</module>
 		<module>core-service</module>
-		<module>front-service</module>
 		<module>auth-service</module>
 		<module>gateway-service</module>
+		<module>fr-service</module>
 	</modules>
 
 	<groupId>com.naumovets</groupId>
