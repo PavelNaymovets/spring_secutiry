@@ -2,5 +2,9 @@ server:
   port: 8191
   servlet:
     context-path: /market-carts
-    session:
-      timeout: 60s
+integrations:
+  product-service:
+    url: http://localhost:8190/market-core/
+    connect-timeout: 5000
+    read-timeout: 10000
+    write-timeout: 5000
