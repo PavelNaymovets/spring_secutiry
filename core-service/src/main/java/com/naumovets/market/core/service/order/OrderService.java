@@ -39,6 +39,6 @@ public class OrderService {
                 )
         ).collect(Collectors.toList()));
         orderRepository.save(order);
-        cartServiceIntegration.clearCart();
+//        cartServiceIntegration.clearCart();
     }
 }
