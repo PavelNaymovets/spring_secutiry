@@ -1,4 +1,4 @@
-package com.naumovets.market.core.entities.authentication;
+package com.naumovets.market.auth.entities;
 
 import lombok.Data;
 

@@ -1,9 +1,8 @@
-package com.naumovets.market.core.service.authentication;
+package com.naumovets.market.auth.service;
 
-import com.naumovets.market.core.aop.aspects.annotations.Timer;
-import com.naumovets.market.core.repositories.authentication.UserRepository;
-import com.naumovets.market.core.entities.authentication.Role;
-import com.naumovets.market.core.entities.authentication.User;
+import com.naumovets.market.auth.entities.Role;
+import com.naumovets.market.auth.entities.User;
+import com.naumovets.market.auth.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,7 +19,6 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-@Timer
 //самописная аннотация для измерения времени работы метода. Работает, если ее поставить и перед классом и перед методом
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;

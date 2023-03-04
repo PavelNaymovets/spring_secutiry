@@ -1,0 +1,8 @@
+2023-03-04 15:21:57 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "USERS" не найдена
+Table "USERS" not found; SQL statement:
+select user0_.id as id1_1_, user0_.email as email2_1_, user0_.password as password3_1_, user0_.username as username4_1_ from users user0_ [42102-214]
+2023-03-04 15:22:09 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "USERS" не найдена
+Table "USERS" not found; SQL statement:
+select user0_.id as id1_1_, user0_.email as email2_1_, user0_.password as password3_1_, user0_.username as username4_1_ from users user0_ where user0_.username=? [42102-214]

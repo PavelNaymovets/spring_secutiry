@@ -1,6 +1,6 @@
-package com.naumovets.market.core.repositories.authentication;
+package com.naumovets.market.auth.repositories;
 
-import com.naumovets.market.core.entities.authentication.User;
+import com.naumovets.market.auth.entities.User;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;

@@ -1,10 +1,10 @@
-package com.naumovets.market.core.controller;
+package com.naumovets.market.auth.controller;
 
 import com.naumovets.market.api.dto.jwt.JwtRequest;
 import com.naumovets.market.api.dto.jwt.JwtResponse;
 import com.naumovets.market.api.exceptions.AppError;
-import com.naumovets.market.core.service.authentication.UserService;
-import com.naumovets.market.core.utils.JwtTokenUtil;
+import com.naumovets.market.auth.service.UserService;
+import com.naumovets.market.auth.utils.JwtTokenUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/auth")
 @AllArgsConstructor
-@CrossOrigin("*")
 public class AuthController {
 
     private UserService userService;

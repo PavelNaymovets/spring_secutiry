@@ -1,6 +1,6 @@
-package com.naumovets.market.core.repositories.authentication;
+package com.naumovets.market.auth.repositories;
 
-import com.naumovets.market.core.entities.authentication.Role;
+import com.naumovets.market.auth.entities.Role;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

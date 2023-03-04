@@ -1,6 +1,5 @@
 angular.module('app', ['ngStorage']).controller('indexController', function($scope, $rootScope, $http, $localStorage){
-    const contextPath = 'http://localhost:8190/market-core';
-    const contextPathToCartService = 'http://localhost:8191/market-carts';
+    const contextPath = 'http://localhost:8193/';
 
     //подставляю авторизационный токен из локал стораджа в хедер при каждом запросе
     if ($localStorage.springWebUser) {
@@ -11,7 +10,7 @@ angular.module('app', ['ngStorage']).controller('indexController', function($sco
 
     //аутентификация
     $scope.tryToAuth = function () {
-        $http.post(contextPath + '/auth', $scope.user)
+        $http.post(contextPath + 'auth/auth', $scope.user)
             .then(function successCallback(response) {
                 if (response.data.token) {
                     $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
@@ -55,7 +54,7 @@ angular.module('app', ['ngStorage']).controller('indexController', function($sco
 
     //уведомление об авторизации
     $scope.showCurrentUserInfo = function () {
-        $http.get(contextPath + '/api/v1/profile')
+        $http.get(contextPath + 'auth/api/v1/profile')
             .then(function successCallback(response) {
                 alert('Имя пользователя: ' + response.data.username);
             }, function errorCallback(response) {
@@ -74,7 +73,7 @@ angular.module('app', ['ngStorage']).controller('indexController', function($sco
     //запрос списка продуктов из репозитория
     $scope.loadProducts = function (pageIndex = 1) {
         $http({
-              url: contextPath + '/api/v1/products',
+              url: contextPath + 'core/api/v1/products',
               method: 'GET',
               params: {
                   name_part : $scope.product ? $scope.product.name_part : null,
@@ -89,7 +88,7 @@ angular.module('app', ['ngStorage']).controller('indexController', function($sco
 
     //запрос списка пользователей
     $scope.loadUsers = function () {
-        $http.get(contextPath + '/api/v1/admin')
+        $http.get(contextPath + 'auth/api/v1/admin')
              .then(function (response) {
                   console.log(response);
                   $scope.UserList = response.data;
@@ -104,7 +103,7 @@ angular.module('app', ['ngStorage']).controller('indexController', function($sco
 
     //удаление продукта из репозитория по id
     $scope.deleteProduct = function (productId) {
-        $http.delete(contextPath + '/api/v1/products/' + productId)
+        $http.delete(contextPath + 'core/api/v1/products/' + productId)
              .then(function (response) {
                 $scope.loadProducts();
              });
@@ -113,7 +112,7 @@ angular.module('app', ['ngStorage']).controller('indexController', function($sco
     //изменение количества продуктов по id
     $scope.changeQuantity = function (productId, delta) {
         $http({
-            url: contextPath + '/api/v1/products',
+            url: contextPath + 'core/api/v1/products',
             method: 'PUT',
             params: {
                 id: productId,
@@ -126,7 +125,7 @@ angular.module('app', ['ngStorage']).controller('indexController', function($sco
 
     //добавить новый продукт
     $scope.addProduct = function () {
-        $http.post(contextPath + '/api/v1/products', $scope.newProduct)
+        $http.post(contextPath + 'core/api/v1/products', $scope.newProduct)
              .then(function(response) {
                 $scope.loadProducts();
              });
@@ -134,7 +133,7 @@ angular.module('app', ['ngStorage']).controller('indexController', function($sco
 
     //запрос списка продуктов из корзины
     $scope.loadProductsCart = function () {
-        $http.get(contextPathToCartService + '/api/v1/cart')
+        $http.get(contextPath + 'cart/api/v1/cart')
              .then(function (response) {
                   console.log(response);
                   $scope.Cart = response.data;
@@ -143,7 +142,7 @@ angular.module('app', ['ngStorage']).controller('indexController', function($sco
 
     //удаление продукта из корзины по id
     $scope.deleteProductCart = function (productId) {
-        $http.delete(contextPathToCartService + '/api/v1/cart/' + productId)
+        $http.delete(contextPath + 'cart/api/v1/cart/' + productId)
              .then(function (response) {
                 $scope.loadProductsCart();
              });
@@ -151,7 +150,7 @@ angular.module('app', ['ngStorage']).controller('indexController', function($sco
 
     //добавление продукта в корзину по id
     $scope.addProductCart = function (productId) {
-        $http.post(contextPathToCartService + '/api/v1/cart/' + productId)
+        $http.post(contextPath + 'cart/api/v1/cart/' + productId)
              .then(function (response) {
                 $scope.loadProductsCart();
              });
@@ -160,7 +159,7 @@ angular.module('app', ['ngStorage']).controller('indexController', function($sco
     //изменение количества продуктов в корзине по id
     $scope.changeProductQuantityInCart = function (productId, delta) {
         $http({
-            url: contextPathToCartService + '/api/v1/cart',
+            url: contextPath + 'cart/api/v1/cart',
             method: 'PUT',
             params: {
                 id: productId,
@@ -173,7 +172,7 @@ angular.module('app', ['ngStorage']).controller('indexController', function($sco
 
     //очистить корзину
     $scope.clearCart = function () {
-        $http.delete(contextPathToCartService + '/api/v1/cart')
+        $http.delete(contextPath + 'cart/api/v1/cart')
             .then(function (response) {
                 $scope.loadProductsCart();
         });
@@ -181,9 +180,10 @@ angular.module('app', ['ngStorage']).controller('indexController', function($sco
 
     //оформить заказ
     $scope.createOrder = function () {
-        $http.post(contextPath + '/api/v1/orders')
+        $http.post(contextPath + 'core/api/v1/orders')
             .then(function (response) {
                 alert('Заказ оформлен');
+                $scope.clearCart();
         });
     }
 

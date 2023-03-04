@@ -1,7 +1,7 @@
 create table orders
 (
     id          bigserial primary key,
-    user_id     bigint not null references users (id),
+    username    varchar(255) not null,
     total_price int not null,
     address     varchar(255),
     phone       varchar(255),
