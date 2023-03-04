@@ -1,0 +1,30 @@
+server:
+  port: 8190
+  servlet:
+    context-path: /market-core
+    session:
+      timeout: 60s
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:mydatabase;MODE=PostgreSQL
+    username: sa
+    password:
+  jpa:
+    show-sql: true
+    hibernate:
+      dialect: org.hibernate.dialect.H2Dialect
+      ddl-auto: none
+      temp:
+        use_jdbc_metadata_defaults: false
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: false
+integrations:
+  cart-service:
+    url: http://localhost:8191/market-carts/
+    connect-timeout: 5000
+    read-timeout: 10000
+    write-timeout: 5000

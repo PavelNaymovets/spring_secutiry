@@ -1,0 +1,24 @@
+server:
+  port: 8194
+  servlet:
+    context-path: /market-auth
+    session:
+      timeout: 60s
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:file:./users;MODE=PostgreSQL
+    username: sa
+    password:
+  jpa:
+    show-sql: true
+    hibernate:
+      dialect: org.hibernate.dialect.H2Dialect
+      ddl-auto: none
+      temp:
+        use_jdbc_metadata_defaults: false
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: false
