@@ -37,11 +37,12 @@ class ProductConverterTest {
 		mockCategory = new Category(1L, "Другое", productList);
 
 		Mockito.doReturn(Optional.of(mockCategory))
-				.when(categoryService).findByTitle(productDto.getCategoryTitle());
+				.when(categoryService)
+				.findByTitle(productDto.getCategoryTitle());
 	}
 
 	@Test
-	void entityToDtoTest() {
+	public void entityToDtoTest() {
 		ProductDto testProductDto = ProductConverter.entityToDto(product);
 
 		Assertions.assertNotNull(testProductDto);
@@ -52,7 +53,7 @@ class ProductConverterTest {
 	}
 
 	@Test
-	void DtoToEntityTest() {
+	public void DtoToEntityTest() {
 		Product testProduct = productConverter.dtoToEntity(productDto);
 
 		Assertions.assertNotNull(testProduct);
