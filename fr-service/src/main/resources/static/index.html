@@ -1,17 +1,16 @@
 <!doctype html>
 
-<html ng-app="app">
+<html ng-app="market">
 
 <head>
     <meta charset="utf-8">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular-route.min.js"></script>
     <script src="index.js"></script>
 </head>
 
@@ -22,6 +21,17 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#!/">Интернет магазин</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#!/store">Каталог товаров</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#!/cart">Корзина</a>
+                </li>
+
                 <li class="nav-item" ng-show="!isUserLoggedIn()">
                     <form class="align-middle" ng-submit="tryToAuth()">
                         <div class="input-group input-group-sm" style="padding: 4px;">
@@ -45,103 +55,12 @@
         </div>
     </nav>
 
-    <div ng-show="isUserLoggedIn()">
-        <div ng-show="isAdmin()">
-            <h3>Список пользователей</h3>
-            <table class="table table-hover" cellpadding="0" cellspacing="0">
-                <tr>
-                    <td>Имя</td>
-                    <td>Роли</td>
-                </tr>
-                <tbody>
-                <tr ng-repeat="s in UserList">
-                    <td>{{s.username}}</td>
-                    <td>{{s.roles}}</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <br>
-        <h3>Список продуктов</h3>
-        <table class="table table-hover" cellpadding="0" cellspacing="0">
-            <tr>
-                <td>ID</td>
-                <td>Продукт</td>
-                <td>Цена</td>
-                <td>Добавить в корзину</td>
-            </tr>
-            <tbody>
-            <tr ng-repeat="s in ProductsList">
-                <td>{{s.id}}</td>
-                <td>{{s.title}}</td>
-                <td>
-                    <button class="btn btn-primary" ng-click="changeQuantity(s.id, -5)">-</button>
-                    {{s.cost}}
-                    <button class="btn btn-primary" ng-click="changeQuantity(s.id, 5)">+</button>
-                </td>
-                <td>
-                    <button class="btn btn-danger" ng-click="addProductCart(s.id)">Добавить</button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <br>
-        <h3>Корзина</h3>
-        <table class="table table-hover" cellpadding="0" cellspacing="0">
-            <tr>
-                <td>ID</td>
-                <td>Продукт</td>
-                <td>Количество</td>
-                <td>Цена</td>
-                <td>Убрать из корзины</td>
-            </tr>
-            <tbody>
-            <tr ng-repeat="s in Cart.list">
-                <td>{{s.productId}}</td>
-                <td>{{s.productTitle}}</td>
-                <td>
-                    <button class="btn btn-primary" ng-click="changeProductQuantityInCart(s.productId, -1)">-</button>
-                    {{s.quantity}}
-                    <button class="btn btn-primary" ng-click="changeProductQuantityInCart(s.productId, 1)">+</button>
-                </td>
-                <td>{{s.pricePerProduct + ' x ' + s.quantity + ' = ' + s.price}}</td>
-                <td>
-                    <button class="btn btn-danger" ng-click="deleteProductCart(s.productId)">Убрать</button>
-                </td>
-            </tr>
-            <tr>
-                <td>Итого</td>
-                <td></td>
-                <td></td>
-                <td>{{Cart.totalPrice}}</td>
-            </tr>
-            </tbody>
-        </table>
-        <p></p>
-        <button type="button" class="btn btn-secondary" ng-click="clearCart()">Очистить корзину</button>
-        <button type="button" class="btn btn-primary" ng-click="createOrder()">Оформить заказ</button>
-        <p></p>
-        <h3>Добавить продукт</h3>
-        <form novalidate ng-submit="addProduct()">
-            <input class="form-control" type="text" placeholder="Название" ng-model="newProduct.title">
-            <p></p>
-            <input class="form-control" type="number" placeholder="Стоимость" ng-model="newProduct.cost">
-            <p></p>
-            <button type="submit" class="btn btn-primary">Добавить</button>
-        </form>
-        <br>
-        <h3>Фильтр продуктов</h3>
-        <form novalidate ng-submit="loadProducts()">
-            <input class="form-control" type="number" placeholder="Минимальная цена" ng-model="product.min_price">
-            <p></p>
-            <input class="form-control" type="number" placeholder="Максимальная цена" ng-model="product.max_price">
-            <p></p>
-            <input class="form-control" type="text" placeholder="Имя продукта" ng-model="product.name_part">
-            <p></p>
-            <button type="submit" class="btn btn-primary">Фильтровать</button>
-            <button type="submit" class="btn btn-primary" ng-click="reload()">Сбросить фильтр</button>
-        </form>
-    </div>
+    <ng-view></ng-view>
+
+    <script src="index.js"></script>
+    <script src="store/store.js"></script>
+    <script src="cart/cart.js"></script>
+    <script src="welcome/welcome.js"></script>
 </div>
 </body>
 </html>

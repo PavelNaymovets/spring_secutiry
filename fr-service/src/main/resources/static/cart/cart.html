@@ -1,0 +1,40 @@
+<div>
+    <p></p>
+    <h3>Корзина</h3>
+    <p></p>
+
+    <table class="table table-hover" cellpadding="0" cellspacing="0">
+        <tr>
+            <td>ID</td>
+            <td>Продукт</td>
+            <td>Количество</td>
+            <td>Цена</td>
+            <td>Убрать из корзины</td>
+        </tr>
+        <tbody>
+        <tr ng-repeat="s in Cart.list">
+            <td>{{s.productId}}</td>
+            <td>{{s.productTitle}}</td>
+            <td>
+                <button class="btn btn-primary" ng-click="changeProductQuantityInCart(s.productId, -1)">-</button>
+                {{s.quantity}}
+                <button class="btn btn-primary" ng-click="changeProductQuantityInCart(s.productId, 1)">+</button>
+            </td>
+            <td>{{s.pricePerProduct + ' x ' + s.quantity + ' = ' + s.price}}</td>
+            <td>
+                <button class="btn btn-danger" ng-click="deleteProductCart(s.productId)">Убрать</button>
+            </td>
+        </tr>
+        <tr>
+            <td>Итого</td>
+            <td></td>
+            <td></td>
+            <td>{{Cart.totalPrice}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <p></p>
+    <button type="button" class="btn btn-secondary" ng-click="clearCart()">Очистить корзину</button>
+    <button type="button" class="btn btn-primary" ng-click="createOrder()">Оформить заказ</button>
+    <p></p>
+</div>
