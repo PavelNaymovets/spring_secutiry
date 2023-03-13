@@ -5,6 +5,7 @@ import com.naumovets.market.api.exceptions.ResourceNotFoundException;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
 public class Cart {
     private List<CartItem> list;
     @Getter
-    private int totalPrice;
+    private BigDecimal totalPrice;
 
     public Cart() {
         list = new ArrayList<>();
@@ -29,7 +30,7 @@ public class Cart {
             list.add(new CartItem(product.getId(), product.getTitle(), 1, product.getCost(), product.getCost()));
         } else {
             item.setQuantity(item.getQuantity() + 1);
-            item.setPrice(item.getPricePerProduct() * item.getQuantity());
+            item.setPrice(item.getPricePerProduct().multiply(BigDecimal.valueOf(item.getQuantity())));
         }
         recalculate();
     }
@@ -45,8 +46,8 @@ public class Cart {
     }
 
     private void recalculate() {
-        totalPrice = 0;
-        list.forEach(cartItem -> totalPrice = totalPrice + cartItem.getPrice());
+        totalPrice = BigDecimal.ZERO;
+        list.forEach(cartItem -> totalPrice = totalPrice.add(cartItem.getPrice()));
         log.info(String.valueOf(totalPrice));
     }
 
@@ -56,7 +57,7 @@ public class Cart {
             return;
         } else {
             item.setQuantity(item.getQuantity() + delta);
-            item.setPrice(item.getPricePerProduct() * item.getQuantity());
+            item.setPrice(item.getPricePerProduct().multiply(BigDecimal.valueOf(item.getQuantity())));
             recalculate();
         }
     }

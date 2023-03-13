@@ -32,7 +32,7 @@ public class ProductEndpoint {
         Product soapProduct = new Product();
         soapProduct.setId(product.getId());
         soapProduct.setTitle(product.getTitle());
-        soapProduct.setCost(product.getCost());
+        soapProduct.setCost(product.getCost().intValue());
         soapProduct.setGroupTitle(product.getCategory().getTitle());
 
         return soapProduct;

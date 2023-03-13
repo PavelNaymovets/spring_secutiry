@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,7 +48,7 @@ public class ProductService {
     @Transactional
     public void changeCost(Long id, Integer delta) {
         Product product = productRepository.findById(id).get();
-        product.setCost(product.getCost() + delta);
+        product.setCost(product.getCost().add(BigDecimal.valueOf(delta)));
     }
 
     public List<Product> findAll() {
