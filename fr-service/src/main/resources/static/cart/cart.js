@@ -3,7 +3,7 @@ angular.module('market').controller('cartController', function ($scope, $http, $
 
     //запрос списка продуктов из корзины
     $scope.loadProductsCart = function () {
-        $http.get(contextPath + 'cart/api/v1/cart')
+        $http.get(contextPath + 'cart/api/v1/cart/' + $localStorage.marketGuestCartId)
              .then(function (response) {
                   console.log(response);
                   $scope.Cart = response.data;
@@ -12,7 +12,7 @@ angular.module('market').controller('cartController', function ($scope, $http, $
 
     //удаление продукта из корзины по id
     $scope.deleteProductCart = function (productId) {
-        $http.delete(contextPath + 'cart/api/v1/cart/' + productId)
+        $http.delete(contextPath + 'cart/api/v1/cart/' + $localStorage.marketGuestCartId + '/' + productId)
              .then(function (response) {
                 $scope.loadProductsCart();
              });
@@ -21,7 +21,7 @@ angular.module('market').controller('cartController', function ($scope, $http, $
     //изменение количества продуктов в корзине по id
     $scope.changeProductQuantityInCart = function (productId, delta) {
         $http({
-            url: contextPath + 'cart/api/v1/cart',
+            url: contextPath + 'cart/api/v1/cart/' + $localStorage.marketGuestCartId,
             method: 'PUT',
             params: {
                 id: productId,
@@ -34,7 +34,7 @@ angular.module('market').controller('cartController', function ($scope, $http, $
 
     //очистить корзину
     $scope.clearCart = function () {
-        $http.delete(contextPath + 'cart/api/v1/cart')
+        $http.delete(contextPath + 'cart/api/v1/cart/' + $localStorage.marketGuestCartId)
             .then(function (response) {
                 $scope.loadProductsCart();
         });

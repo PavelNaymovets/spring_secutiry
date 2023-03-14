@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,9 +32,9 @@ class ProductConverterTest {
 
 	@BeforeEach
 	public void initMockBeanBehavior() {
-		product = new Product(1L, "Молоко", 100, new Category(1L, "Другое", new ArrayList<>()));
+		product = new Product(1L, "Молоко", BigDecimal.valueOf(100), new Category(1L, "Другое", new ArrayList<>()));
 		productList = new ArrayList<>(List.of(product));
-		productDto = new ProductDto(1L, "Молоко", 100, "Другое");
+		productDto = new ProductDto(1L, "Молоко", BigDecimal.valueOf(100), "Другое");
 		mockCategory = new Category(1L, "Другое", productList);
 
 		Mockito.doReturn(Optional.of(mockCategory))

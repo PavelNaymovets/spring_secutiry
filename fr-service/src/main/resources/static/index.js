@@ -29,16 +29,25 @@
                 let jwt = $localStorage.springWebUser.token;
                 let payload = JSON.parse(atob(jwt.split('.')[1]));
                 let currentTime = parseInt(new Date().getTime() / 1000);
+
                 if (currentTime > payload.exp) {
                     console.log("Token is expired!!!");
                     delete $localStorage.springWebUser;
                     $http.defaults.headers.common.Authorization = '';
                 }
+
             } catch (e) {
             }
 
             //подставляю авторизационный токен из локал стораджа в хедер при каждом запросе
             $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.springWebUser.token;
+        }
+
+        if (!$localStorage.marketGuestCartId) {
+            $http.get('http://localhost:8193/cart/api/v1/cart/uuid')
+                .then(function successCallback(response) {
+                    $localStorage.marketGuestCartId = response.data.value;
+                });
         }
     }
 })();
@@ -66,13 +75,13 @@ angular.module('market').controller('indexController', function($scope, $rootSco
     //выход с сайта
     $scope.tryToLogout = function () {
         $scope.clearUser();
+        $location.path('/');
         if ($scope.user.username) {
             $scope.user.username = null;
         }
         if ($scope.user.password) {
             $scope.user.password = null;
         }
-        $location.path('/');
     }
 
     //удаление токена из локал стораджа

@@ -12,17 +12,19 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class CartServiceIntegration {
     private final WebClient cartServiceWebclient;
 
-    public CartDto getCart() {
+    public CartDto getCart(String username) {
         return cartServiceWebclient.get()
-                .uri("/api/v1/cart")
+                .uri("/api/v1/cart/0")
+                .header("username", username)
                 .retrieve()
                 .bodyToMono(CartDto.class)
                 .block();
     }
 
-    public void clearCart() {
+    public void clearCart(String username) {
         cartServiceWebclient.delete()
                 .uri("/api/v1/cart")
+                .header("username", username)
                 .retrieve()
                 .toBodilessEntity()
                 .block();

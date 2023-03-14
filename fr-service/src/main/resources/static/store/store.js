@@ -55,7 +55,7 @@ angular.module('market').controller('storeController', function ($scope, $http, 
 
     //добавление продукта в корзину по id
     $scope.addProductCart = function (productId) {
-        $http.post(contextPath + 'cart/api/v1/cart/' + productId)
+        $http.post(contextPath + 'cart/api/v1/cart/' + $localStorage.marketGuestCartId + '/' + productId)
              .then(function (response) {
                 console.log(response);
              });
