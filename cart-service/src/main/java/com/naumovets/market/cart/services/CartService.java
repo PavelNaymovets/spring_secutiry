@@ -6,49 +6,50 @@ import com.naumovets.market.cart.integrations.ProductServiceIntegration;
 import com.naumovets.market.cart.models.Cart;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
-import java.util.HashMap;
+import java.util.function.Consumer;
 
 @Service
 @RequiredArgsConstructor
 public class CartService {
     private final ProductServiceIntegration productServiceIntegration;
+    private final RedisTemplate<String, Object> redisTemplate;
 
     @Value("${cart-service.cart-prefix}")
     private String cartPrefix;
-    private HashMap<String, Cart> carts;
-
-    @PostConstruct
-    public void init() {
-        carts = new HashMap<>();
-    }
 
     public Cart getCart(String uuid) {
         String targetUuid = cartPrefix + uuid;
-        if(!carts.containsKey(targetUuid)) {
-            carts.put(targetUuid, new Cart());
+        if (!redisTemplate.hasKey(targetUuid)) {
+            redisTemplate.opsForValue().set(targetUuid, new Cart());
         }
 
-        return carts.get(targetUuid);
+        return (Cart) redisTemplate.opsForValue().get(targetUuid);
     }
 
     public void addProduct(String uuid,Long productId) {
         ProductDto product = productServiceIntegration.findById(productId);
-        getCart(uuid).add(product);
+        execute(uuid, cart -> cart.add(product));
     }
 
     public void deleteProduct(String uuid,Long productId) {
         ProductDto product = productServiceIntegration.findById(productId);
-        getCart(uuid).delete(product);
+        execute(uuid, cart -> cart.delete(product));
     }
 
     public void changeQuantity(String uuid, Long id, Integer delta) {
-        getCart(uuid).changeQuantity(id, delta);
+        execute(uuid, cart -> cart.changeQuantity(id, delta));
     }
 
     public void deleteProducts(String uuid) {
-        getCart(uuid).deleteAll();
+        execute(uuid, Cart::deleteAll);
+    }
+
+    private void execute(String uuid, Consumer<Cart> operation) {
+        Cart cart = getCart(uuid);
+        operation.accept(cart);
+        redisTemplate.opsForValue().set(cartPrefix + uuid, cart);
     }
 }

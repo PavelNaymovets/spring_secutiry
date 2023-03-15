@@ -2,15 +2,14 @@ package com.naumovets.market.cart.models;
 
 import com.naumovets.market.api.dto.product.ProductDto;
 import com.naumovets.market.api.exceptions.ResourceNotFoundException;
+import lombok.Data;
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-@Slf4j
+@Data
 public class Cart {
     private List<CartItem> list;
     @Getter
@@ -18,10 +17,6 @@ public class Cart {
 
     public Cart() {
         list = new ArrayList<>();
-    }
-
-    public List<CartItem> getItems() {
-        return Collections.unmodifiableList(list);
     }
 
     public void add(ProductDto product) {
@@ -48,7 +43,6 @@ public class Cart {
     private void recalculate() {
         totalPrice = BigDecimal.ZERO;
         list.forEach(cartItem -> totalPrice = totalPrice.add(cartItem.getPrice()));
-        log.info(String.valueOf(totalPrice));
     }
 
     public void changeQuantity(Long id, Integer delta) {
