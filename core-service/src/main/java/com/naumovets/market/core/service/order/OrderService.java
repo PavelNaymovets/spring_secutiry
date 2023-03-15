@@ -41,4 +41,8 @@ public class OrderService {
         orderRepository.save(order);
 //        cartServiceIntegration.clearCart();
     }
+
+    public List<Order> findByUsername(String username) {
+        return orderRepository.findByUsername(username);
+    }
 }
