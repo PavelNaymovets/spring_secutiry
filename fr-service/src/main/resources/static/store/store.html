@@ -26,16 +26,18 @@
         </tbody>
     </table>
     <br>
-    <h3>Добавить продукт</h3>
-    <form novalidate ng-submit="addProduct()">
-        <input class="form-control" type="text" placeholder="Название" ng-model="newProduct.title">
-        <p></p>
-        <input class="form-control" type="text" placeholder="Категория" ng-model="newProduct.categoryTitle">
-        <p></p>
-        <input class="form-control" type="number" placeholder="Стоимость" ng-model="newProduct.cost">
-        <p></p>
-        <button type="submit" class="btn btn-primary">Добавить</button>
-    </form>
+    <div ng-show="isAdmin()">
+        <h3>Добавить продукт</h3>
+        <form novalidate ng-submit="addProduct()">
+            <input class="form-control" type="text" placeholder="Название" ng-model="newProduct.title">
+            <p></p>
+            <input class="form-control" type="text" placeholder="Категория" ng-model="newProduct.categoryTitle">
+            <p></p>
+            <input class="form-control" type="number" placeholder="Стоимость" ng-model="newProduct.cost">
+            <p></p>
+            <button type="submit" class="btn btn-primary">Добавить</button>
+        </form>
+    </div>
     <br>
     <h3>Фильтр продуктов</h3>
     <form novalidate ng-submit="loadProducts()">

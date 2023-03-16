@@ -2,6 +2,7 @@ package com.naumovets.market.auth.service;
 
 import com.naumovets.market.auth.entities.Role;
 import com.naumovets.market.auth.entities.User;
+import com.naumovets.market.auth.repositories.RoleRepository;
 import com.naumovets.market.auth.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 //самописная аннотация для измерения времени работы метода. Работает, если ее поставить и перед классом и перед методом
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
+    private final RoleService roleService;
 
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
@@ -40,5 +42,11 @@ public class UserService implements UserDetailsService {
 
     public List<User> getAll() {
         return (List<User>) userRepository.findAll();
+    }
+
+    public void createUser(User user) {
+        Role role = roleService.getRole();
+        user.setRoles(List.of(role));
+        userRepository.save(user);
     }
 }
