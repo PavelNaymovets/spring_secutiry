@@ -13,7 +13,7 @@ angular.module('market').controller('storeController', function ($scope, $http, 
               }
         }).then(function (response) {
               console.log(response);
-              $scope.ProductsList = response.data.content;
+              $scope.ProductsList = response.data.items;
         });
     }
 

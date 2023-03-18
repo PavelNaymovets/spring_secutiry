@@ -117,5 +117,16 @@ angular.module('market').controller('indexController', function($scope, $rootSco
         }
     }
 
+    //пользователь имеет права администратора
+    $rootScope.isAdmin = function () {
+        if ($localStorage.springWebUser == null) {
+            return false;
+        } else if ($localStorage.springWebUser.isAdmin == true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
 });
