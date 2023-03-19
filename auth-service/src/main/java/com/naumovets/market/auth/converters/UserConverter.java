@@ -12,7 +12,8 @@ import java.util.stream.Collectors;
 public class UserConverter {
 
     public static UserDto entityToDto(User user) {
-        List<String> rolesList = user.getRoles().stream().map(Role::getName).collect(Collectors.toList());
-        return new UserDto(user.getUsername(), rolesList);
+        List<String> rolesList = user.getRoles().stream().map(role -> role.getName().substring(5).toLowerCase()).collect(Collectors.toList());
+        String roles = String.join(", ", rolesList);
+        return new UserDto(user.getUsername(), roles);
     }
 }
