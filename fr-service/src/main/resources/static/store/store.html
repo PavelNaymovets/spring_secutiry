@@ -26,6 +26,24 @@
         </tbody>
     </table>
     <br>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" ng-click="loadProducts(page - 1)">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item" ng-repeat="pageIndex in pagesList">
+                <a class="page-link" ng-click="loadProducts(pageIndex)">{{pageIndex}}</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" ng-click="loadProducts(page + 1)">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <br>
     <div ng-show="isAdmin()">
         <h3>Добавить продукт</h3>
         <form novalidate ng-submit="addProduct()">

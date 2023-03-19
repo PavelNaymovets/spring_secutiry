@@ -3,18 +3,37 @@ angular.module('market').controller('storeController', function ($scope, $http, 
 
     //запрос списка продуктов из репозитория
     $scope.loadProducts = function (pageIndex = 1) {
+        $scope.page = pageIndex;
+        if (pageIndex <= 1) {
+            $scope.page = 1;
+        } else if (pageIndex > $scope.totalPages) {
+            $scope.page = $scope.totalPages;
+        }
         $http({
               url: contextPath + 'core/api/v1/products',
               method: 'GET',
               params: {
+                  p : $scope.page,
                   name_part : $scope.product ? $scope.product.name_part : null,
                   min_price : $scope.product ? $scope.product.min_price : null,
                   max_price : $scope.product ? $scope.product.max_price : null
               }
         }).then(function (response) {
               console.log(response);
+              $scope.totalPages = response.data.totalPages;
+
               $scope.ProductsList = response.data.items;
+              $scope.generatePageList(response.data.totalPages);
         });
+    }
+
+    //подсчет количества страниц с продуктами
+    $scope.generatePageList = function(totalPages) {
+        out = [];
+        for (let i = 0; i < totalPages; i++) {
+            out.push(i + 1);
+        }
+        $scope.pagesList = out;
     }
 
     //сбросить фильтр
