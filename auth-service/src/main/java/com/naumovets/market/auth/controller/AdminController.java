@@ -4,10 +4,7 @@ import com.naumovets.market.api.dto.user.UserDto;
 import com.naumovets.market.auth.converters.UserConverter;
 import com.naumovets.market.auth.service.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,6 +18,16 @@ public class AdminController {
     @GetMapping
     public List<UserDto> getAll() {
         return userService.getAll().stream().map(UserConverter::entityToDto).collect(Collectors.toList());
+    }
+
+    @PutMapping("/role/add")
+    public void addUserRole(@RequestBody UserDto userDto) {
+        userService.addRole(userDto);
+    }
+
+    @PutMapping("/role/delete")
+    public void deleteUserRole(@RequestBody UserDto userDto) {
+        userService.deleteRole(userDto);
     }
 
 }

@@ -1,13 +1,39 @@
-<table class="table table-hover" cellpadding="0" cellspacing="0">
-    <tr>
-        <td>Имя</td>
-        <td>Роли</td>
-    </tr>
-    <tbody>
-    <tr ng-repeat="s in UserList">
-        <td>{{s.username}}</td>
-        <td>{{s.roles}}</td>
-    </tr>
-    </tbody>
-</table>
+<div>
+    <p></p>
+    <h3>Список пользователей и их ролей</h3>
+    <p></p>
+
+    <table class="table table-hover" cellpadding="0" cellspacing="0">
+        <tr>
+            <td>Имя пользователя</td>
+            <td>Роль</td>
+        </tr>
+        <tbody>
+        <tr ng-repeat="s in UserList">
+            <td>{{s.username}}</td>
+            <td>{{s.roles}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+    <h3>Изменить роль пользователя</h3>
+    <form novalidate>
+        <div class="mb-3">
+            <label for="username" class="form-label">Имя пользователя</label>
+            <select id="username" class="form-control" ng-model="updateUser.username">
+                <option ng-repeat="s in UserList">{{s.username}}</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="role" class="form-label">Роль</label>
+            <select id="role" class="form-control" ng-model="updateUser.roles">
+                <option>user</option>
+                <option>admin</option>
+                <option>manager</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary" ng-click="addRole()">Добавить роль</button>
+        <button type="submit" class="btn btn-danger" ng-click="deleteRole()">Убрать роль</button>
+    </form>
+</div>
 

@@ -28,7 +28,7 @@
             })
             .when('/userInfo', {
                 templateUrl: 'user/info/userInfo.html',
-                controller: '/userInfoController'
+                controller: 'userInfoController'
             })
             .otherwise({
                 redirectTo: '/'

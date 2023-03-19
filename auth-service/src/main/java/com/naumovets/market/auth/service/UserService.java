@@ -1,8 +1,9 @@
 package com.naumovets.market.auth.service;
 
+import com.naumovets.market.api.dto.user.UserDto;
+import com.naumovets.market.api.exceptions.RoleAlreadyExistsException;
 import com.naumovets.market.auth.entities.Role;
 import com.naumovets.market.auth.entities.User;
-import com.naumovets.market.auth.repositories.RoleRepository;
 import com.naumovets.market.auth.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,6 +17,7 @@ import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 @Service
@@ -49,4 +51,29 @@ public class UserService implements UserDetailsService {
         user.setRoles(List.of(role));
         userRepository.save(user);
     }
+
+    @Transactional
+    public void addRole(UserDto userDto) {
+        Role role = roleService.getRole(userDto.getRoles());
+        User user = userRepository.findByUsername(userDto.getUsername()).get();
+
+        Optional<Role> findingUserRoles = user.getRoles().stream()
+                .filter(userRole -> userRole.getName().equals("ROLE_" + userDto.getRoles().toUpperCase()))
+                .findFirst();
+
+        if (findingUserRoles.isPresent()) {
+            throw new RoleAlreadyExistsException("Такая роль у этого пользователя уже есть");
+        }
+
+        user.getRoles().add(role);
+    }
+
+    @Transactional
+    public void deleteRole(UserDto userDto) {
+        Role role = roleService.getRole(userDto.getRoles());
+        User user = userRepository.findByUsername(userDto.getUsername()).get();
+        user.getRoles().remove(role);
+    }
+
+
 }
