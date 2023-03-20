@@ -31,8 +31,8 @@ public class OrderController {
     )
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createOrder(@RequestHeader String username) {
-        orderService.createOrder(username);
+    public void createOrder(@RequestHeader String username, @RequestParam String phone, @RequestParam String address) {
+        orderService.createOrder(username, phone, address);
     }
 
     @Operation(

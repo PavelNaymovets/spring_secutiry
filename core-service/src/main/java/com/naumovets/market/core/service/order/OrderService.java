@@ -24,10 +24,12 @@ public class OrderService {
     private final CartServiceIntegration cartServiceIntegration;
 
     @Transactional
-    public void createOrder(String username) {
+    public void createOrder(String username, String phone, String address) {
         CartDto cartDto = cartServiceIntegration.getCart(username);
         Order order = new Order();
         order.setUsername(username);
+        order.setPhone(phone);
+        order.setAddress(address);
         order.setTotalPrice(cartDto.getTotalPrice());
         order.setItems(cartDto.getList().stream().map(
                 cartItemDto -> new OrderItem(

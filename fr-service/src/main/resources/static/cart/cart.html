@@ -35,6 +35,49 @@
     </table>
     <p></p>
     <button type="button" class="btn btn-secondary" ng-click="clearCart()">Очистить корзину</button>
-    <button type="button" class="btn btn-primary" ng-show="isUserLoggedIn()" ng-click="createOrder()">Оформить заказ</button>
     <p></p>
+    <br>
+    <div ng-show="isUserLoggedIn()">
+        <h3>Оформить заказ</h3>
+        <p></p>
+        <form class="row g-3">
+            <div class="col-md-6">
+                <label for="telephone" class="form-label">Введите телефон</label>
+                <input type="tel" class="form-control" id="telephone" aria-describedby="telephone" name="tel"
+                       placeholder="+7(900)123-45-67" required maxlength="16"
+                       pattern="\+7\s?[\(]{0,1}9[0-9]{2}[\)]{0,1}\s?\d{3}[-]{0,1}\d{2}[-]{0,1}\d{2}"
+                       ng-model="frontOrder.phone">
+            </div>
+            <div class="col-md-6">
+                <label for="country" class="form-label">Укажите страну</label>
+                <input type="text" class="form-control" id="country" aria-describedby="country" placeholder="Россия"
+                       ng-model="frontOrder.country">
+            </div>
+            <div>
+                <br>
+            </div>
+            <div class="col-md-4">
+                <label for="city" class="form-label">Укажите город</label>
+                <input type="text" class="form-control" id="city" aria-describedby="city" placeholder="г.Санкт-Петербург"
+                       ng-model="frontOrder.city">
+            </div>
+            <div class="col-md-4">
+                <label for="street" class="form-label">Укажите улицу</label>
+                <input type="text" class="form-control" id="street" aria-describedby="street" placeholder="ул.Ушинского"
+                       ng-model="frontOrder.street">
+            </div>
+            <div class="col-md-2">
+                <label for="home" class="form-label">Укажите номер дома</label>
+                <input type="number" class="form-control" id="home" aria-describedby="home" placeholder="1"
+                       ng-model="frontOrder.home">
+            </div>
+            <div class="col-md-2">
+                <label for="flat" class="form-label">Укажите квартиру</label>
+                <input type="number" class="form-control" id="flat" aria-describedby="flat" placeholder="21"
+                       ng-model="frontOrder.flat">
+            </div>
+        </form>
+        <br>
+        <button type="button" class="btn btn-primary" ng-click="createOrder()">Оформить</button>
+    </div>
 </div>

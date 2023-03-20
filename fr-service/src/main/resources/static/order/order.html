@@ -1,22 +1,55 @@
 <div>
     <p></p>
-    <h3>Мои заказы</h3>
+    <h3>Заказы</h3>
     <p></p>
 
     <table class="table table-hover" cellpadding="0" cellspacing="0">
         <tr>
             <td>Номер заказа</td>
             <td>Адрес доставки</td>
+            <td>Имя покупателя</td>
             <td>Телефон</td>
             <td>Цена</td>
+            <td>Состав заказа</td>
         </tr>
+
         <tbody>
-        <tr ng-repeat="order in orders">
-            <td>{{order.id}}</td>
-            <td>{{order.address}}</td>
-            <td>{{order.phone}}</td>
-            <td>{{order.totalPrice}}</td>
+            <tr ng-repeat="order in orders">
+                <td>{{order.id}}</td>
+                <td>{{order.address}}</td>
+                <td>{{order.username}}</td>
+                <td>{{order.phone}}</td>
+                <td>{{order.totalPrice}}</td>
+                <td>
+                    <button class="btn btn-primary" ng-click="loadOrders(order.id)">Посмотреть</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p></p>
+    <h3>Состав заказа с номером: {{orderId}}</h3>
+    <p></p>
+    <table class="table table-hover" cellpadding="0" cellspacing="0">
+        <tr>
+            <td>Наименование товара</td>
+            <td>Количество</td>
+            <td>Стоимость</td>
+            <td>Цена</td>
         </tr>
+
+        <tbody>
+            <tr ng-repeat="item in items">
+                <td>{{item.productTitle}}</td>
+                <td>{{item.quantity}}</td>
+                <td>{{item.pricePerProduct}}</td>
+                <td>{{item.price}}</td>
+            </tr>
+            <tr>
+                <td>Итого</td>
+                <td></td>
+                <td></td>
+                <td>{{orderTotalPrice}}</td>
+            </tr>
         </tbody>
     </table>
 </div>

@@ -42,10 +42,19 @@ angular.module('market').controller('cartController', function ($scope, $http, $
 
     //оформить заказ
     $scope.createOrder = function () {
-        $http.post(contextPath + 'core/api/v1/orders')
-            .then(function (response) {
-                alert('Заказ оформлен');
-                $scope.clearCart();
+        $scope.phone = $scope.frontOrder.phone;
+        $scope.address = $scope.frontOrder.country + ", г." + $scope.frontOrder.city + ", ул." + $scope.frontOrder.street + ", дом " + $scope.frontOrder.home + ", квартира " + $scope.frontOrder.flat;
+
+        $http({
+            url: contextPath + 'core/api/v1/orders',
+            method: 'POST',
+            params: {
+                phone : $scope.phone,
+                address : $scope.address
+            }
+        }).then(function (response) {
+            alert('Заказ оформлен');
+            $scope.clearCart();
         });
     }
 
