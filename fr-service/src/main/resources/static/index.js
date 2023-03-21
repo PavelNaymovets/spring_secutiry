@@ -30,6 +30,10 @@
                 templateUrl: 'user/info/userInfo.html',
                 controller: 'userInfoController'
             })
+            .when('/product', {
+                templateUrl: 'product/product.html',
+                controller: 'productController'
+            })
             .otherwise({
                 redirectTo: '/'
             });

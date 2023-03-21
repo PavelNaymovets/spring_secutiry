@@ -3,7 +3,7 @@ create table categories (
     title           varchar(255) unique
 );
 
-insert into categories (title) values ('Food'), ('Others');
+insert into categories (title) values ('Еда'), ('Другое');
 
 create table products
 (

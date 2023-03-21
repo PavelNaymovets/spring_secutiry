@@ -1,0 +1,39 @@
+<div>
+    <p></p>
+    <h3>Добавить продукт</h3>
+    <p></p>
+
+    <form class="row g-3">
+        <div class="col-md-4">
+            <label for="productTitle" class="form-label">Название продукта</label>
+            <input type="text" class="form-control" id="productTitle" aria-describedby="username" placeholder=""
+                   ng-model="newProduct.title">
+        </div>
+        <div class="col-md-4">
+            <label for="category" class="form-label">Категория</label>
+            <select id="category" class="form-control" ng-model="newProduct.categoryTitle">
+                <option ng-repeat="s in categoryList">{{s.title}}</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label for="cost" class="form-label">Стоимость</label>
+            <input type="number" class="form-control" id="cost" aria-describedby="username" placeholder=""
+                   ng-model="newProduct.cost">
+        </div>
+    </form>
+    <p></p>
+    <button type="button" class="btn btn-primary" ng-click="addProduct()">Добавить</button>
+</div>
+<div>
+    <p></p>
+    <h3>Изменить продукт</h3>
+    <form novalidate ng-submit="updateProduct()">
+        <input class="form-control" type="text" placeholder="Название" ng-model="updated_product.title">
+        <p></p>
+        <input class="form-control" type="number" placeholder="Цена" ng-model="updated_product.price">
+        <p></p>
+        <input class="form-control" type="text" placeholder="Название категории" ng-model="updated_product.categoryTitle">
+        <p></p>
+        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+    </form>
+</div>

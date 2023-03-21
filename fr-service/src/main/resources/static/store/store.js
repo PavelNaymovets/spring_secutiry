@@ -46,7 +46,7 @@ angular.module('market').controller('storeController', function ($scope, $http, 
     $scope.deleteProduct = function (productId) {
         $http.delete(contextPath + 'core/api/v1/products/' + productId)
              .then(function (response) {
-                $scope.loadProducts();
+                $scope.loadProducts($scope.page);
              });
     }
 
@@ -60,16 +60,8 @@ angular.module('market').controller('storeController', function ($scope, $http, 
                 delta: delta
             }
         }).then(function (response) {
-            $scope.loadProducts();
+            $scope.loadProducts($scope.page);
         });
-    }
-
-    //добавить новый продукт
-    $scope.addProduct = function () {
-        $http.post(contextPath + 'core/api/v1/products', $scope.newProduct)
-             .then(function(response) {
-                $scope.loadProducts();
-             });
     }
 
     //добавление продукта в корзину по id

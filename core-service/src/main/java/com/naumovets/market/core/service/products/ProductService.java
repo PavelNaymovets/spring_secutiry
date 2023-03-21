@@ -1,8 +1,12 @@
 package com.naumovets.market.core.service.products;
 
+import com.naumovets.market.api.dto.product.ProductDto;
+import com.naumovets.market.core.converters.ProductConverter;
 import com.naumovets.market.core.entities.products.Product;
 import com.naumovets.market.core.repositories.products.specifications.ProductSpecification;
 import com.naumovets.market.core.repositories.products.ProductRepository;
+import com.naumovets.market.core.validators.ProductValidator;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
@@ -14,12 +18,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ProductService {
-    ProductRepository productRepository;
-
-    public ProductService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
+    private final ProductRepository productRepository;
+    private final ProductValidator productValidator;
+    private final ProductConverter productConverter;
 
     public Page<Product> findAll(Integer minPrice, Integer maxPrice, String namePart, Integer page) {
         Specification<Product> spec = Specification.where(null);
@@ -67,7 +70,9 @@ public class ProductService {
         return productRepository.findByCostGreaterThan(value);
     }
 
-    public Product addNewProduct(Product product) {
+    public Product addNewProduct(ProductDto productDto) {
+        productValidator.validate(productDto);
+        Product product = productConverter.dtoToEntity(productDto);
         return productRepository.save(product);
     }
 }

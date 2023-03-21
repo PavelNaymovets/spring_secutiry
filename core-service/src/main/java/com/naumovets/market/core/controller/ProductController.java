@@ -1,11 +1,14 @@
 package com.naumovets.market.core.controller;
 
+import com.naumovets.market.api.dto.category.CategoryDto;
 import com.naumovets.market.api.dto.product.PageDto;
 import com.naumovets.market.api.dto.product.ProductDto;
 import com.naumovets.market.api.exceptions.AppError;
 import com.naumovets.market.api.exceptions.ResourceNotFoundException;
+import com.naumovets.market.core.converters.CategoryConverter;
 import com.naumovets.market.core.converters.ProductConverter;
 import com.naumovets.market.core.entities.products.Product;
+import com.naumovets.market.core.service.products.CategoryService;
 import com.naumovets.market.core.service.products.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -18,13 +21,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping("/api/v1/products")
 @AllArgsConstructor
 @Tag(name = "Контроллер продуктов", description = "Содержит методы работы с продуктами")
 public class ProductController {
     private ProductService productService;
-    private ProductConverter productConverter;
+    private CategoryService categoryService;
+    private CategoryConverter categoryConverter;
 
     @Operation(
             summary = "Запрос на получение отфильтрованного списка продуктов",
@@ -73,9 +80,8 @@ public class ProductController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ProductDto addNewProduct(@RequestBody ProductDto productDto) {
-        Product newProduct = productConverter.dtoToEntity(productDto);
-        newProduct = productService.addNewProduct(newProduct);
-        return ProductConverter.entityToDto(newProduct);
+        Product product = productService.addNewProduct(productDto);
+        return ProductConverter.entityToDto(product);
     }
 
     @Operation(
@@ -122,6 +128,19 @@ public class ProductController {
             @RequestParam @Parameter(description = "Идентификатор продукта", required = true) Long id,
             @RequestParam @Parameter(description = "Идентификатор продукта", required = true) Integer delta) {
         productService.changeCost(id, delta);
+    }
+
+    @Operation(
+            summary = "Получение списка категорий",
+            responses = {
+                    @ApiResponse(
+                            description = "Успешный запрос", responseCode = "200"
+                    )
+            }
+    )
+    @GetMapping("/category")
+    public List<CategoryDto> getCategories() {
+        return categoryService.getAll().stream().map(categoryConverter::entityToDto).collect(Collectors.toList());
     }
 
 }

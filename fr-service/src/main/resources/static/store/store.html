@@ -1,5 +1,30 @@
 <div>
     <p></p>
+    <h3>Фильтр продуктов</h3>
+    <p></p>
+
+    <form class="row g-3">
+        <div class="col-md-4">
+            <label for="minPrice" class="form-label">Минимальная цена</label>
+            <input type="number" class="form-control" id="minPrice" aria-describedby="minPrice" placeholder=""
+                   ng-model="product.min_price">
+        </div>
+        <div class="col-md-4">
+            <label for="maxPrice" class="form-label">Максимальная цена</label>
+            <input type="number" class="form-control" id="maxPrice" aria-describedby="maxPrice" placeholder=""
+                   ng-model="product.max_price">
+        </div>
+        <div class="col-md-4">
+            <label for="productTitle" class="form-label">Название продукта</label>
+            <input type="text" class="form-control" id="productTitle" aria-describedby="username" placeholder=""
+                   ng-model="product.name_part">
+        </div>
+    </form>
+    <p></p>
+    <button type="submit" class="btn btn-primary" ng-click="loadProducts()">Фильтровать</button>
+    <button type="submit" class="btn btn-primary" ng-click="reload()">Сбросить фильтр</button>
+
+    <p></p>
     <h3>Каталог товаров</h3>
     <p></p>
 
@@ -21,6 +46,7 @@
             </td>
             <td>
                 <button class="btn btn-primary" ng-click="addProductCart(s.id)">Добавить</button>
+                <button class="btn btn-danger" ng-show="isAdmin()" ng-click="deleteProduct(s.id)">Удалить из базы</button>
             </td>
         </tr>
         </tbody>
@@ -43,29 +69,4 @@
             </li>
         </ul>
     </nav>
-    <br>
-    <div ng-show="isAdmin()">
-        <h3>Добавить продукт</h3>
-        <form novalidate ng-submit="addProduct()">
-            <input class="form-control" type="text" placeholder="Название" ng-model="newProduct.title">
-            <p></p>
-            <input class="form-control" type="text" placeholder="Категория" ng-model="newProduct.categoryTitle">
-            <p></p>
-            <input class="form-control" type="number" placeholder="Стоимость" ng-model="newProduct.cost">
-            <p></p>
-            <button type="submit" class="btn btn-primary">Добавить</button>
-        </form>
-    </div>
-    <br>
-    <h3>Фильтр продуктов</h3>
-    <form novalidate ng-submit="loadProducts()">
-        <input class="form-control" type="number" placeholder="Минимальная цена" ng-model="product.min_price">
-        <p></p>
-        <input class="form-control" type="number" placeholder="Максимальная цена" ng-model="product.max_price">
-        <p></p>
-        <input class="form-control" type="text" placeholder="Имя продукта" ng-model="product.name_part">
-        <p></p>
-        <button type="submit" class="btn btn-primary">Фильтровать</button>
-        <button type="submit" class="btn btn-primary" ng-click="reload()">Сбросить фильтр</button>
-    </form>
 </div>
