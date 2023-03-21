@@ -1,7 +1,6 @@
 package com.naumovets.market.cart.models;
 
 import com.naumovets.market.api.dto.product.ProductDto;
-import com.naumovets.market.api.exceptions.ResourceNotFoundException;
 import lombok.Data;
 import lombok.Getter;
 
@@ -20,13 +19,7 @@ public class Cart {
     }
 
     public void add(ProductDto product) {
-        CartItem item = list.stream().filter(cartItem -> cartItem.getProductId().equals(product.getId())).findFirst().orElse(null);
-        if (item == null) {
-            list.add(new CartItem(product.getId(), product.getTitle(), 1, product.getCost(), product.getCost()));
-        } else {
-            item.setQuantity(item.getQuantity() + 1);
-            item.setPrice(item.getPricePerProduct().multiply(BigDecimal.valueOf(item.getQuantity())));
-        }
+        list.add(new CartItem(product.getId(), product.getTitle(), 1, product.getCost(), product.getCost()));
         recalculate();
     }
 
@@ -45,14 +38,15 @@ public class Cart {
         list.forEach(cartItem -> totalPrice = totalPrice.add(cartItem.getPrice()));
     }
 
-    public void changeQuantity(Long id, Integer delta) {
-        CartItem item = list.stream().filter(cartItem -> cartItem.getProductId().equals(id)).findFirst().orElseThrow(() -> new ResourceNotFoundException("Cart item not found, id: " + id));
-        if (item.getQuantity() == 0 && delta == -1) {
-            return;
+    public boolean changeQuantity(Long id, Integer delta) {
+        CartItem item = list.stream().filter(cartItem -> cartItem.getProductId().equals(id)).findFirst().orElse(null);
+        if (item == null || (item.getQuantity() == 0 && delta == -1)) {
+            return false;
         } else {
             item.setQuantity(item.getQuantity() + delta);
             item.setPrice(item.getPricePerProduct().multiply(BigDecimal.valueOf(item.getQuantity())));
             recalculate();
+            return true;
         }
     }
 }

@@ -4,11 +4,13 @@ package com.naumovets.market.cart.services;
 import com.naumovets.market.api.dto.product.ProductDto;
 import com.naumovets.market.cart.integrations.ProductServiceIntegration;
 import com.naumovets.market.cart.models.Cart;
+import com.naumovets.market.cart.models.CartItem;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.function.Consumer;
 
 @Service
@@ -30,8 +32,14 @@ public class CartService {
     }
 
     public void addProduct(String uuid,Long productId) {
-        ProductDto product = productServiceIntegration.findById(productId);
-        execute(uuid, cart -> cart.add(product));
+        Cart cart = getCart(uuid);
+
+        if(!cart.changeQuantity(productId, 1)) {
+            ProductDto product = productServiceIntegration.findById(productId);
+            cart.add(product);
+        }
+
+        redisTemplate.opsForValue().set(cartPrefix + uuid, cart);
     }
 
     public void deleteProduct(String uuid,Long productId) {
