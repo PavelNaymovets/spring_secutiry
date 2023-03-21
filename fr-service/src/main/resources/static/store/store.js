@@ -1,4 +1,4 @@
-angular.module('market').controller('storeController', function ($scope, $http, $location, $localStorage) {
+angular.module('market').controller('storeController', function ($scope, $rootScope, $http, $location, $localStorage) {
     const contextPath = 'http://localhost:8193/';
 
     //запрос списка продуктов из репозитория

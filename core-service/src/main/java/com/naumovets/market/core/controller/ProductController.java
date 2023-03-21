@@ -65,6 +65,20 @@ public class ProductController {
     }
 
     @Operation(
+            summary = "Запрос на получение всего списка продуктов",
+            responses = {
+                    @ApiResponse(
+                            description = "Продукты найдены", responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = PageDto.class))
+                    )
+            }
+    )
+    @GetMapping("/list")
+    public List<ProductDto> getAll() {
+        return productService.findAll().stream().map(ProductConverter::entityToDto).collect(Collectors.toList());
+    }
+
+    @Operation(
             summary = "Запрос на создание нового продукта",
             responses = {
                     @ApiResponse(
@@ -79,7 +93,7 @@ public class ProductController {
     )
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ProductDto addNewProduct(@RequestBody ProductDto productDto) {
+    public ProductDto addNewProduct(@RequestBody @Parameter(description = "DTO продукта", required = true) ProductDto productDto) {
         Product product = productService.addNewProduct(productDto);
         return ProductConverter.entityToDto(product);
     }
@@ -128,6 +142,19 @@ public class ProductController {
             @RequestParam @Parameter(description = "Идентификатор продукта", required = true) Long id,
             @RequestParam @Parameter(description = "Идентификатор продукта", required = true) Integer delta) {
         productService.changeCost(id, delta);
+    }
+
+    @Operation(
+            summary = "Изменение имя, категорию и стоимость продукта",
+            responses = {
+                    @ApiResponse(
+                            description = "Изменения сохранены", responseCode = "200"
+                    )
+            }
+    )
+    @PutMapping("/update")
+    public void changeProduct(@RequestBody @Parameter(description = "DTO продукта", required = true) ProductDto productDto) {
+        productService.changeProduct(productDto);
     }
 
     @Operation(

@@ -27,13 +27,32 @@
 <div>
     <p></p>
     <h3>Изменить продукт</h3>
-    <form novalidate ng-submit="updateProduct()">
-        <input class="form-control" type="text" placeholder="Название" ng-model="updated_product.title">
-        <p></p>
-        <input class="form-control" type="number" placeholder="Цена" ng-model="updated_product.price">
-        <p></p>
-        <input class="form-control" type="text" placeholder="Название категории" ng-model="updated_product.categoryTitle">
-        <p></p>
-        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+    <p></p>
+
+    <form class="row g-3">
+        <div class="col-md-3">
+            <label for="oldProductTitle" class="form-label">Старое название продукта</label>
+            <select id="oldProductTitle" class="form-control" ng-model="oldTitle">
+                <option ng-repeat="s in productList">{{s.title}}</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="updateProductTitle" class="form-label">Новое название продукта</label>
+            <input type="text" class="form-control" id="updateProductTitle" aria-describedby="username" placeholder=""
+                   ng-model="newTitle">
+        </div>
+        <div class="col-md-3">
+            <label for="updateProductCategory" class="form-label">Категория</label>
+            <select id="updateProductCategory" class="form-control" ng-model="updateProduct.categoryTitle">
+                <option ng-repeat="s in categoryList">{{s.title}}</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="updateProductCost" class="form-label">Стоимость</label>
+            <input type="number" class="form-control" id="updateProductCost" aria-describedby="username" placeholder=""
+                   ng-model="updateProduct.cost">
+        </div>
     </form>
+    <p></p>
+    <button type="button" class="btn btn-primary" ng-click="updateProductData()">Сохранить изменения</button>
 </div>
