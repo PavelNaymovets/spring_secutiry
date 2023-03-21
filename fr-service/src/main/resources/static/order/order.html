@@ -10,7 +10,8 @@
             <td>Имя покупателя</td>
             <td>Телефон</td>
             <td>Цена</td>
-            <td>Состав заказа</td>
+            <td colspan="3" align="center">Состав заказа</td>
+            <td></td>
         </tr>
 
         <tbody>
@@ -18,38 +19,45 @@
                 <td>{{order.id}}</td>
                 <td>{{order.address}}</td>
                 <td>{{order.username}}</td>
-                <td>{{order.phone}}</td>
+                <td style="width: 15%">{{order.phone}}</td>
                 <td>{{order.totalPrice}}</td>
                 <td>
-                    <button class="btn btn-primary" ng-click="loadOrders(order.id)">Посмотреть</button>
-                </td>
+                    <td>
+                        <button class="btn btn-primary" ng-click="loadOrderProducts(order.id)">Посмотреть</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger" ng-click="hideOrderProducts()">Скрыть</button>
+                    </td>
+                <td>
             </tr>
         </tbody>
     </table>
-    <p></p>
-    <h3>Состав заказа с номером: {{orderId}}</h3>
-    <p></p>
-    <table class="table table-hover" cellpadding="0" cellspacing="0">
-        <tr>
-            <td>Наименование товара</td>
-            <td>Количество</td>
-            <td>Стоимость</td>
-            <td>Цена</td>
-        </tr>
-
-        <tbody>
-            <tr ng-repeat="item in items">
-                <td>{{item.productTitle}}</td>
-                <td>{{item.quantity}}</td>
-                <td>{{item.pricePerProduct}}</td>
-                <td>{{item.price}}</td>
+    <div ng-show="orderList == true">
+        <p></p>
+        <h3>Состав заказа с номером: {{orderId}}</h3>
+        <p></p>
+        <table class="table table-hover" cellpadding="0" cellspacing="0">
+            <tr>
+                <td>Наименование товара</td>
+                <td>Количество</td>
+                <td>Стоимость</td>
+                <td>Цена</td>
             </tr>
+
+            <tbody>
+                <tr ng-repeat="item in items">
+                    <td>{{item.productTitle}}</td>
+                    <td>{{item.quantity}}</td>
+                    <td>{{item.pricePerProduct}}</td>
+                    <td>{{item.price}}</td>
+                </tr>
             <tr>
                 <td>Итого</td>
                 <td></td>
                 <td></td>
                 <td>{{orderTotalPrice}}</td>
             </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 </div>
