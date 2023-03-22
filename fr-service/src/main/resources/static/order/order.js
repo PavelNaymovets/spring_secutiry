@@ -11,8 +11,8 @@ angular.module('market').controller('ordersController', function ($scope, $http)
 
     $scope.loadOrderProducts = function (id = 1) {
         $scope.orderId = id;
-        $scope.items = $scope.orders[id - 1].items;
-        $scope.orderTotalPrice = $scope.orders[id - 1].totalPrice;
+        $scope.items = $scope.orders[$scope.orders.length - 1].items;
+        $scope.orderTotalPrice = $scope.orders[$scope.orders.length - 1].totalPrice;
         $scope.orderList = true;
     }
 
