@@ -92,12 +92,6 @@ angular.module('market').controller('indexController', function($scope, $rootSco
     $scope.tryToLogout = function () {
         $scope.clearUser();
         $location.path('/');
-        if ($scope.user.username) {
-            $scope.user.username = null;
-        }
-        if ($scope.user.password) {
-            $scope.user.password = null;
-        }
     }
 
     //удаление токена из локал стораджа
@@ -110,9 +104,11 @@ angular.module('market').controller('indexController', function($scope, $rootSco
     $scope.showCurrentUserInfo = function () {
         $http.get(contextPath + 'auth/api/v1/profile')
             .then(function successCallback(response) {
-                alert('Имя пользователя: ' + response.data.username);
+                alert('Имя пользователя: ' + response.data.username + '\n' + 'Почта: ' + response.data.email);
             }, function errorCallback(response) {
-                alert('Не авторизованный пользователь');
+                if (response.status == 403) {
+                    alert('У вас нет прав администратора, для просмотра информации о себе!');
+                }
             });
     }
 
