@@ -52,10 +52,15 @@ angular.module('market').controller('cartController', function ($scope, $http, $
                 phone : $scope.phone,
                 address : $scope.address
             }
-        }).then(function (response) {
-            alert('Заказ оформлен');
-            $scope.clearCart();
-        });
+        }).then(function successCallback(response) {
+                alert('Заказ оформлен');
+                $scope.clearCart();
+                $location.path('/order');
+            }, function errorCallback(response) {
+                if (response.status == 400) {
+                    alert(response.data.errorMessage);
+                }
+            });
     }
 
     $scope.loadProductsCart();

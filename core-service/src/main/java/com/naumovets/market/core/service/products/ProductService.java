@@ -7,7 +7,7 @@ import com.naumovets.market.core.entities.products.Product;
 import com.naumovets.market.core.repositories.products.CategoryRepository;
 import com.naumovets.market.core.repositories.products.specifications.ProductSpecification;
 import com.naumovets.market.core.repositories.products.ProductRepository;
-import com.naumovets.market.core.validators.ProductValidator;
+import com.naumovets.market.core.validators.ProductValidatorImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,7 +23,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
-    private final ProductValidator productValidator;
+    private final ProductValidatorImpl productValidatorImpl;
     private final ProductConverter productConverter;
     private final CategoryRepository categoryRepository;
 
@@ -74,7 +74,7 @@ public class ProductService {
     }
 
     public Product addNewProduct(ProductDto productDto) {
-        productValidator.validate(productDto);
+        productValidatorImpl.validate(productDto);
         Product product = productConverter.dtoToEntity(productDto);
         return productRepository.save(product);
     }
