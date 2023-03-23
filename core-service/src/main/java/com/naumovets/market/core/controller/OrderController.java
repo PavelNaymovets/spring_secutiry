@@ -45,6 +45,12 @@ public class OrderController {
     )
     @GetMapping
     public List<OrderDto> getUserOrders(@RequestHeader String username) {
-        return orderService.findByUsername(username).stream().map(orderConverter::entityToDto).collect(Collectors.toList());
+        List<OrderDto> orders = orderService.findByUsername(username).stream().map(orderConverter::entityToDto).collect(Collectors.toList());
+
+        for (int i = 0; i < orders.size(); i++) {
+            orders.get(i).setSequenceNumber(i);
+        }
+
+        return orders;
     }
 }

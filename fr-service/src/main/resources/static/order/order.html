@@ -23,7 +23,7 @@
                 <td>{{order.totalPrice}}</td>
                 <td>
                     <td>
-                        <button class="btn btn-primary" ng-click="loadOrderProducts(order.id)">Посмотреть</button>
+                        <button class="btn btn-primary" ng-click="loadOrderProducts(order.id, order.sequenceNumber)">Посмотреть</button>
                     </td>
                     <td>
                         <button class="btn btn-danger" ng-click="hideOrderProducts()">Скрыть</button>

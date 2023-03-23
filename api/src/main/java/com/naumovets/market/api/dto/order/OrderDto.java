@@ -29,4 +29,7 @@ public class OrderDto {
 
     @Schema(description = "Стоимость заказа", required = true, example = "200.00")
     private BigDecimal totalPrice;
+
+    @Schema(description = "Порядковый номер заказа. Нужен для отображения состава заказа по порядковому номеру на фронте", required = true, example = "1")
+    private Integer sequenceNumber;
 }
