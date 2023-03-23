@@ -1,7 +1,7 @@
 package com.naumovets.market.core.service.order;
 
 import com.naumovets.market.api.dto.cart.CartDto;
-import com.naumovets.market.api.dto.cart.CartItemDto;
+import com.naumovets.market.api.exceptions.OrderHasNotItemsException;
 import com.naumovets.market.core.entities.order.Order;
 import com.naumovets.market.core.entities.order.OrderItem;
 import com.naumovets.market.core.integrations.CartServiceIntegration;
@@ -29,6 +29,11 @@ public class OrderService {
     public void createOrder(String username, String phone, String address) {
         orderValidator.validate(username, phone, address);
         CartDto cartDto = cartServiceIntegration.getCart(username);
+
+        if (cartDto.getList().isEmpty()) {
+            throw new OrderHasNotItemsException("Заполните корзину продуктами");
+        }
+
         Order order = new Order();
         order.setUsername(username);
         order.setPhone(phone);

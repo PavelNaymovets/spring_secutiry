@@ -60,6 +60,9 @@ angular.module('market').controller('cartController', function ($scope, $http, $
                 if (response.status == 400) {
                     alert(response.data.errorMessage);
                 }
+                if (response.status == 404) {
+                    alert(response.data.message);
+                }
             });
     }
 

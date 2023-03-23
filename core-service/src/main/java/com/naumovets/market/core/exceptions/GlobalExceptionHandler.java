@@ -1,9 +1,6 @@
 package com.naumovets.market.core.exceptions;
 
-import com.naumovets.market.api.exceptions.AppError;
-import com.naumovets.market.api.exceptions.FieldsValidationError;
-import com.naumovets.market.api.exceptions.ResourceNotFoundException;
-import com.naumovets.market.api.exceptions.ValidationException;
+import com.naumovets.market.api.exceptions.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,5 +20,11 @@ public class GlobalExceptionHandler {
     public ResponseEntity<FieldsValidationError> catchValidationException(ValidationException e) {
         log.error(e.getMessage(), e);
         return new ResponseEntity<>(new FieldsValidationError(e.getErrorMessage()), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<AppError> catchOrderHasNotItemsException(OrderHasNotItemsException e) {
+        log.error(e.getMessage(), e);
+        return new ResponseEntity<>(new AppError(HttpStatus.NOT_FOUND.value(), e.getMessage()), HttpStatus.NOT_FOUND);
     }
 }
